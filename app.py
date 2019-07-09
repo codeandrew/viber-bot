@@ -39,10 +39,8 @@ def incoming():
     if isinstance(viber_request, ViberMessageRequest):
         message = viber_request.message
         # lets echo back
-        print("Viber ID: ")
-        print(viber_request.sender.id)
         viber.send_messages(viber_request.sender.id, [
-            message
+            TextMessage(text=str(viber_request))
         ])
     elif isinstance(viber_request, ViberSubscribedRequest):
         viber.send_messages(viber_request.get_user.id, [
@@ -51,7 +49,7 @@ def incoming():
     elif isinstance(viber_request, ViberFailedRequest):
         logger.warn("client failed receiving message. failure: {0}".format(viber_request))
 
-    return Response(status=200)
+    return Response(viber_request, status=200)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
