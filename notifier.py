@@ -16,7 +16,7 @@ payload = {
    },
    "tracking_data": "tracking data",
    "type": "text",
-   "text": "Deployment is finished: %d" % message
+   "text": "Deployment is finished: {}".format(message)
 }
 
 headers = {
